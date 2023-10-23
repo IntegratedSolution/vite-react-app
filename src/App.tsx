@@ -1,27 +1,26 @@
-import { useState } from 'react'
-// import './App.css'
 import "@/App.css";
-import TitleComponent from "@/components/TitleComponent";
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from "react-router-dom";
+import RouterView from "./navigations";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export interface GlobalPropType { 
+  useNavigate: typeof useNavigate; 
+  useLocation: typeof useLocation;
+  useSelector:typeof useSelector ; useDispatch:typeof useDispatch;
+  hello:()=>void;
+}
+const App=()=> {
+  const hello = ()=>{
+    console.log("Say Hello");
+  }
+  const globalProps : GlobalPropType= {
+    // router
+    useNavigate,useLocation,hello, 
+    //  store
+    useSelector, useDispatch
+  }
   return (
-    <>
-      <TitleComponent />
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <RouterView globalProps={globalProps}/>
   )
 }
 
